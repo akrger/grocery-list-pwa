@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+    <head>
+	{% load static %}
+	<link rel="stylesheet"
+              href="{% static 'css/material-components-web.min.css' %}">
+    </head>
+    <body>
+	{% block content %}
+	{% endblock %}
+	<script src="{% static 'js/material-components-web.min.js' %}"></script>
+	<script>mdc.autoInit()</script>
+    </body>
+</html>
