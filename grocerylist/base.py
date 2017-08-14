@@ -117,8 +117,8 @@ STATIC_URL = '/static/'
 
 # default static files settings for PythonAnywhere.
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
-MEDIA_ROOT = u'/home/Mugen/grocerylist/media'
+MEDIA_ROOT = u'/home/Mugen/grocery-list-pwa/media'
 MEDIA_URL = '/media/'
-STATIC_ROOT = u'/home/Mugen/grocerylist/static'
+STATIC_ROOT = u'/home/Mugen/grocery-list-pwa/static'
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
