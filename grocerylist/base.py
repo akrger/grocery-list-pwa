@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pwa',
     'main',
 ]
 
@@ -122,3 +123,5 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = u'/home/Mugen/grocery-list-pwa/static'
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+PWA_APP_NAME = 'Grocerylist App'
