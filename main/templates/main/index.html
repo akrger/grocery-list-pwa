@@ -24,32 +24,4 @@
 	    </span>
 	</button>
     </div>
-    <script>
-     if ('serviceWorker' in navigator) {
-	 navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
-	     // Registration was successful
-
-	     var newWorker = registration.installing;
-
-	     // statechange fires every time the ServiceWorker.state changes
-	     newWorker.onstatechange = function() {
-		 // show the message on activation
-		 if (newWorker.state == 'activated' && !navigator.serviceWorker.controller) {
- 		     const MDCSnackbar = mdc.snackbar.MDCSnackbar;
- 		     const snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
- 		     const dataObj = {
- 			 message: "{% trans 'This website now works offline' %}",
- 			 actionText: '{% trans "Dismiss" %}',
- 			 actionHandler: function () {
- 			     console.log('my cool function');
- 			 }
- 		     };
- 		     snackbar.show(dataObj);
-		 }
-	     };
-	 }).catch(function(err) {
-	     // registration failed :(
-	 });
-     }
-    </script>
     {% endblock %}

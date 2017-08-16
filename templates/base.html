@@ -4,6 +4,7 @@
     <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="manifest" href="/manifest.json">
 	{% load static %}
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="{% static 'css/material-components-web.min.css' %}">
@@ -42,10 +43,10 @@
 	<script src="{% static 'js/material-components-web.min.js' %}"></script>
 	<script>mdc.autoInit()</script>
 	<script>
-	    let menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
-	    // Add event listener to some button to toggle the menu on and off.
+	 let menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
+	 // Add event listener to some button to toggle the menu on and off.
 	 document.querySelector('.menu-button').addEventListener('click', () => menu.open = !menu.open);
-	    var menuEl = document.querySelector('.mdc-simple-menu');
+	 var menuEl = document.querySelector('.mdc-simple-menu');
 
 	 var logout = document.querySelector('#logout');
 	 menuEl.addEventListener('MDCSimpleMenu:selected', function(evt) {
@@ -54,9 +55,37 @@
 		 window.location.href = "{% url 'logout' %}";
 	     }
 	 });
-	 
+
 	</script>
 	{% block mdc_scripts %}
 	{% endblock %}
+	<script>
+	 if ('serviceWorker' in navigator) {
+	     navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+		 // Registration was successful
+
+		 var newWorker = registration.installing;
+
+		 // statechange fires every time the ServiceWorker.state changes
+		 newWorker.onstatechange = function() {
+		     // show the message on activation
+		     if (newWorker.state == 'activated' && !navigator.serviceWorker.controller) {
+ 			 const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+ 			 const snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
+ 			 const dataObj = {
+ 			     message: "{% trans 'This website now works offline' %}",
+ 			     actionText: '{% trans "Dismiss" %}',
+ 			     actionHandler: function () {
+ 				 console.log('my cool function');
+ 			     }
+ 			 };
+ 			 snackbar.show(dataObj);
+		     }
+		 };
+	     }).catch(function(err) {
+		 // registration failed :(
+	     });
+	 }
+	</script>
     </body>
 </html>
