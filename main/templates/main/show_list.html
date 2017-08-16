@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<nav class="mdc-list mdc-list--two-line">
+    {% for entry in entries %}
+    <li class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+	<span class="mdc-list-item__text">
+	    {{ entry.title }}
+	    <span class="mdc-list-item__text__secondary">
+		{% if entry.quantity %}
+		{% trans "Quantity: " %}{{ entry.quantity }}
+		{% endif %}
+	    </span>
+	</span>
+    </li>
+    {% endfor %}
+</nav>
+<div class="fab wrapper">
+    <button class="mdc-fab material-icons mdc-fab--mini" aria-label="Add new Grocery List" data-mdc-auto-init="MDCRipple" onclick="window.location.href='{% url 'new_entry' list_id %}'">
+	<span class="mdc-fab__icon">
+	    add
+	</span>
+    </button>
+</div>
+{% endblock %}

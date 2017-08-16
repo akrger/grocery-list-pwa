@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<form action="new_list" method="post">
+    {% csrf_token %}
+    <div class="mdc-form-field">
+	<div class="mdc-textfield mdc-textfield--upgraded">
+	    <label for="id_title" class="mdc-textfield__label">{{ form.title.label }}</label>
+	    {{ form.title }}
+	</div>
+    </div>
+    <div>
+	<button type="submit" class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">{% trans "Submit" %}</button>
+    </div>
+</form>
+{% endblock %}
+{% block mdc_scripts %}
+<script>
+ mdc.textfield.MDCTextfield.attachTo(document.querySelector('.mdc-textfield'));
+</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-16 03:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: main/templates/main/index.html:41
+msgid "This website now works offline"
+msgstr "Diese Webseite funktioniert nun offline"
+
+#: main/templates/main/index.html:42
+msgid "Dismiss"
+msgstr "Verstanden"
+
+#: main/templates/main/new_entry.html:19 main/templates/main/new_list.html:13
+msgid "Submit"
+msgstr "Abschicken"
+
+#: main/templates/main/show_list.html:9
+msgid "Quantity: "
+msgstr "Anzahl: "
+
+#: main/views.py:12
+#, fuzzy
+#| msgid "New Grocery List"
+msgid "All Grocery Lists"
+msgstr "Alle Einkaufslisten"
+
+#: main/views.py:33
+msgid "New Grocery List"
+msgstr "Neue Einkaufsliste"
+
+#: main/views.py:57
+msgid "New Entry"
+msgstr "Neuer Eintrag"
+
+#, fuzzy
+#~| msgid "New Grocery List"
+#~ msgid "Grocery List"
+#~ msgstr "Einkaufslise"

@@ -1,14 +1,61 @@
 <!doctype html>
 <html>
     <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{% load static %}
-	<link rel="stylesheet"
-              href="{% static 'css/material-components-web.min.css' %}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/material-components-web.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
-    <body>
-	{% block content %}
-	{% endblock %}
+    <body class="mdc-typography">
+	<div class="container">
+	    <div class="mdc-toolbar mdc-elevation--z4">
+		<div class="mdc-toolbar__row">
+		    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			<span class="mdc-toolbar__title catalog-title">
+			    {% block toolbar_title%}
+			    {{ toolbarTitle }}
+			    {% endblock %}
+			</span>
+		    </section>
+		    <div class="mdc-menu-anchor">
+			<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+			    <a href="#" class="menu-button material-icons mdc-toolbar__icon" aria-label="Bookmark this page" alt="Bookmark this page">more_vert</a>
+			</section>
+			<div class="mdc-simple-menu" tabindex="-1">
+			    <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+				<li id="logout" class="mdc-list-item" role="menuitem" tabindex="0">
+				    Logout
+				</li>
+			    </ul>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <div class="content">
+		{% block content %}
+		{% endblock %}
+	    </div>
+	</div>
 	<script src="{% static 'js/material-components-web.min.js' %}"></script>
 	<script>mdc.autoInit()</script>
+	<script>
+	    let menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
+	    // Add event listener to some button to toggle the menu on and off.
+	 document.querySelector('.menu-button').addEventListener('click', () => menu.open = !menu.open);
+	    var menuEl = document.querySelector('.mdc-simple-menu');
+
+	 var logout = document.querySelector('#logout');
+	 menuEl.addEventListener('MDCSimpleMenu:selected', function(evt) {
+	     const detail = evt.detail;
+	     if (detail.item == logout) {
+		 window.location.href = "{% url 'logout' %}";
+	     }
+	 });
+	 
+	</script>
+	{% block mdc_scripts %}
+	{% endblock %}
     </body>
 </html>

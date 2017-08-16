@@ -1,6 +1,7 @@
 *.egg-info
 *.pot
 *.py[co]
+.mo
 .tox/
 __pycache__
 MANIFEST
