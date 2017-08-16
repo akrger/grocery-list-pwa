@@ -1,4 +1,5 @@
 <!doctype html>
+{% load i18n %}
 <html>
     <head>
 	<meta charset="utf-8">
@@ -15,7 +16,7 @@
 		    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
 			<span class="mdc-toolbar__title catalog-title">
 			    {% block toolbar_title%}
-			    {{ toolbarTitle }}
+			    {% trans toolbarTitle %}
 			    {% endblock %}
 			</span>
 		    </section>

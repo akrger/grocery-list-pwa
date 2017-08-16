@@ -5,13 +5,13 @@
     {% csrf_token %}
     <div class="mdc-form-field">
 	<div id="title" class="mdc-textfield mdc-textfield--upgraded">
-	    <label for="id_title" class="mdc-textfield__label">{{ form.title.label }}</label>
+	    <label for="id_title" class="mdc-textfield__label">{% trans "Title" %}</label>
 	    {{ form.title }}
 	</div>
     </div> 
     <div class="mdc-form-field">
 	<div id="quantity" class="mdc-textfield mdc-textfield--upgraded">
-	    <label for="id_quantity" class="mdc-textfield__label">{{ form.quantity.label }}</label>
+	    <label for="id_quantity" class="mdc-textfield__label">{% trans "Quantity" %}</label>
 	    {{ form.quantity }}
 	</div>
     </div>
