@@ -15,6 +15,8 @@
 	    <div class="mdc-toolbar mdc-elevation--z4">
 		<div class="mdc-toolbar__row">
 		    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			<button class="nav-menu material-icons mdc-toolbar__icon--menu">menu</button>
+
 			<span class="mdc-toolbar__title catalog-title">
 			    {% block toolbar_title%}
 			    {% trans toolbarTitle %}
@@ -35,6 +37,25 @@
 		    </div>
 		</div>
 	    </div>
+	    <aside class="mdc-temporary-drawer">
+		<nav class="mdc-temporary-drawer__drawer">
+		    <header class="mdc-temporary-drawer__header">
+			<div class="mdc-temporary-drawer__header-content mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
+			    {% trans "Grocery List App" %}
+			</div>
+		    </header>
+		    <nav class="mdc-temporary-drawer__content mdc-list-group">
+			<div id="icon-with-text-demo" class="mdc-list">
+			    <a class="mdc-list-item mdc-temporary-drawer--selected" href="/">
+				<i class="material-icons mdc-list-item__start-detail" aria-hidden="true">list</i>{% trans "Grocery Lists" %}
+			    </a> 
+			    <a class="mdc-list-item mdc-temporary-drawer--selected" href="{% url 'show_all_entries' %}">
+				<i class="material-icons mdc-list-item__start-detail" aria-hidden="true">list</i>{% trans "All Entries" %}
+			    </a>
+			</div>
+		    </nav>
+		</nav>
+	    </aside>
 	    <div class="content">
 		{% block content %}
 		{% endblock %}
@@ -58,34 +79,48 @@
 
 	</script>
 	{% block mdc_scripts %}
+	<script>
+	 var drawerEl = document.querySelector('.mdc-temporary-drawer');
+	 var MDCTemporaryDrawer = mdc.drawer.MDCTemporaryDrawer;
+	 var drawer = new MDCTemporaryDrawer(drawerEl);
+	 document.querySelector('.nav-menu').addEventListener('click', function() {
+	     drawer.open = true;
+	 });
+	 drawerEl.addEventListener('MDCTemporaryDrawer:open', function() {
+             console.log('Received MDCTemporaryDrawer:open');
+	 });
+	 drawerEl.addEventListener('MDCTemporaryDrawer:close', function() {
+             console.log('Received MDCTemporaryDrawer:close');
+	 });
+	</script>
 	{% endblock %}
 	<script>
-	 if ('serviceWorker' in navigator) {
-	     navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
-		 // Registration was successful
+	    if ('serviceWorker' in navigator) {
+	    navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+	    // Registration was successful
 
-		 var newWorker = registration.installing;
+	    var newWorker = registration.installing;
 
-		 // statechange fires every time the ServiceWorker.state changes
-		 newWorker.onstatechange = function() {
-		     // show the message on activation
-		     if (newWorker.state == 'activated' && !navigator.serviceWorker.controller) {
- 			 const MDCSnackbar = mdc.snackbar.MDCSnackbar;
- 			 const snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
- 			 const dataObj = {
- 			     message: "{% trans 'This website now works offline' %}",
- 			     actionText: '{% trans "Dismiss" %}',
- 			     actionHandler: function () {
- 				 console.log('my cool function');
- 			     }
- 			 };
- 			 snackbar.show(dataObj);
-		     }
-		 };
-	     }).catch(function(err) {
-		 // registration failed :(
-	     });
-	 }
+	    // statechange fires every time the ServiceWorker.state changes
+	    newWorker.onstatechange = function() {
+	    // show the message on activation
+	    if (newWorker.state == 'activated' && !navigator.serviceWorker.controller) {
+ 	    const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+ 	    const snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
+ 	    const dataObj = {
+ 	    message: "{% trans 'This website now works offline' %}",
+ 	    actionText: '{% trans "Dismiss" %}',
+ 	    actionHandler: function () {
+ 	    console.log('my cool function');
+ 	    }
+ 	    };
+ 	    snackbar.show(dataObj);
+	    }
+	    };
+	    }).catch(function(err) {
+	    // registration failed :(
+	    });
+	    }
 	</script>
     </body>
 </html>

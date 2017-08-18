@@ -1,8 +1,9 @@
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm, TextInput, Select
 from .models import List, Entry
-from django.utils.translation import ugettext as _
+
 
 class ListForm(ModelForm):
+
     class Meta:
         model = List
         fields = ['title']
@@ -12,8 +13,11 @@ class ListForm(ModelForm):
 class EntryForm(ModelForm):
     class Meta:
         model = Entry
-        fields = ['title', 'quantity']
-        widgets = {'title': TextInput(attrs={'class': 'mdc-textfield__input'}),
-                   'quantity': TextInput(attrs={'class': 'mdc-textfield__input',
-                                                'type': 'number',
-                                                'min': "0"})}
+        fields = ['grocery_list', 'title', 'quantity', 'category']
+        widgets = {
+            'grocery_list': Select(attrs={'class': 'mdc-select'}),
+            'title': TextInput(attrs={'class': 'mdc-textfield__input'}),
+            'category': Select(attrs={'class': 'mdc-select'}),
+            'quantity': TextInput(attrs={'class': 'mdc-textfield__input',
+                                         'type': 'number',
+                                         'min': "1"})}

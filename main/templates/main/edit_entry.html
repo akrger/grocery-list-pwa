@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<form action="new_entry" method="post">
+
+
+
+
+<form action="" method="post">
     {% csrf_token %}
+    <div class="mdc-form-field">
+	{{form.grocery_list}}
+    </div>
+    <br>
+    <br>
     <div class="mdc-form-field">
 	<div id="title" class="mdc-textfield mdc-textfield--upgraded">
 	    <label for="id_title" class="mdc-textfield__label">{% trans "Title" %}</label>

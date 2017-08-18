@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^list/(?P<list_id>[\d])/$',
-        views.show_list, name="show_list"),
+        login_required(views.ShowListView.as_view()), name="show_list"),
     url(r'^list/new_list',
         login_required(views.NewListView.as_view()),
         name='new_list'),
@@ -16,4 +16,8 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login),
     url(r'^logout/$', auth_views.logout,
         {'next_page': '/'}, name="logout"),
+    url(r'^list/all', views.show_all_entries, name="show_all_entries"),
+    url(r'^list/edit_entry/(?P<entry_id>[\d])/$',
+        login_required(views.EditEntryView.as_view()),
+        name='edit_entry'),
 ]

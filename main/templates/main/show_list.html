@@ -1,18 +1,20 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<nav class="mdc-list mdc-list--two-line">
+<nav class="mdc-list mdc-list--dense mdc-list--two-line">
     {% for entry in entries %}
-    <li class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+    
+    <a href="{% url 'edit_entry' entry.id %}" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
 	<span class="mdc-list-item__text">
 	    {{ entry.title }}
 	    <span class="mdc-list-item__text__secondary">
 		{% if entry.quantity %}
 		{% trans "Quantity: " %}{{ entry.quantity }}
 		{% endif %}
+		{% trans "Category: " %}{{ entry.get_category_display }}
 	    </span>
 	</span>
-    </li>
+    </a>
     {% endfor %}
 </nav>
 <div class="fab wrapper">
@@ -21,5 +23,5 @@
 	    add
 	</span>
     </button>
-</div>
-{% endblock %}
+    </div>
+    {% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<nav class="mdc-list mdc-list--two-line mdc-list--dense">
+    {% for entry in entries.items %}
+    
+    <a href="{% url 'edit_entry' entry.1.0 %}" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+	<span class="mdc-list-item__text">
+	    {{entry.0}}
+	    <span class="mdc-list-item__text__secondary">
+		{% if entry.1.1 %}
+		{% trans "Category: " %}{{ entry.1.1 }}
+		{% endif %}
+	    </span>
+	    
+	</span>
+	</a>
+    {% endfor %}
+</nav>
+{% endblock %}

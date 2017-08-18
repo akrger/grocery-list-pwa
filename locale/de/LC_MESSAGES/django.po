@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-16 11:17+0200\n"
+"POT-Creation-Date: 2017-08-18 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,27 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main/templates/main/index.html:41
-msgid "This website now works offline"
-msgstr "Diese Webseite funktioniert nun offline"
-
-#: main/templates/main/index.html:42
-msgid "Dismiss"
-msgstr "Verstanden"
-
-#: main/templates/main/new_entry.html:8 main/templates/main/new_list.html:8
+#: main/models.py:7 main/models.py:21 main/templates/main/edit_entry.html:17
+#: main/templates/main/new_entry.html:8
 msgid "Title"
 msgstr "Titel"
 
-#: main/templates/main/new_entry.html:14
+#: main/models.py:17
+msgid "Drinks"
+msgstr "Getränke"
+
+#: main/models.py:18
+msgid "Foods"
+msgstr "Lebensmittel"
+
+#: main/models.py:25
 msgid "Quantity"
 msgstr "Anzahl"
 
-#: main/templates/main/new_entry.html:19 main/templates/main/new_list.html:13
+#: main/templates/main/edit_entry.html:35 main/templates/main/new_entry.html:26
+#: main/templates/main/new_list.html:13
 msgid "Submit"
 msgstr "Abschicken"
 
-#: main/templates/main/show_list.html:11
+#: main/templates/main/show_all_entries.html:12
+#: main/templates/main/show_list.html:14
+msgid "Category: "
+msgstr "Kategorie: "
+
+#: main/templates/main/show_list.html:12
 msgid "Quantity: "
 msgstr "Anzahl: "
 
@@ -46,10 +53,34 @@ msgstr "Anzahl: "
 msgid "All Grocery Lists"
 msgstr "Alle Einfkaufslisten"
 
-#: main/views.py:33
+#: main/views.py:37 templates/base.html:53
+msgid "All Entries"
+msgstr "Alle Einträge"
+
+#: main/views.py:49
+msgid "Edit Entry"
+msgstr "Eintrag bearbeiten"
+
+#: main/views.py:75
 msgid "New Grocery List"
 msgstr "Neue Einkaufsliste"
 
-#: main/views.py:57
+#: main/views.py:98
 msgid "New Entry"
 msgstr "Neuer Eintrag"
+
+#: templates/base.html:44
+msgid "Grocery List App"
+msgstr "Einkaufslisten-App"
+
+#: templates/base.html:50
+msgid "Grocery Lists"
+msgstr "Einfkaufslisten"
+
+#: templates/base.html:111
+msgid "This website now works offline"
+msgstr "Diese Webseite funktioniert nun offline"
+
+#: templates/base.html:112
+msgid "Dismiss"
+msgstr "Verstanden"
