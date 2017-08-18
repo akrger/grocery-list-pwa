@@ -20,7 +20,9 @@ class Entry(models.Model):
 
     title = models.CharField(max_length=50, verbose_name=_('Title'))
     category = models.CharField(max_length=2,
-                                choices=CATEGORIES)
+                                choices=CATEGORIES,
+                                null=True,
+                                blank=True)
     quantity = models.IntegerField(
         null=True, blank=True, verbose_name=_('Quantity'))
     grocery_list = models.ForeignKey(
