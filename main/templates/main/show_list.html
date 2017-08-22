@@ -1,27 +1,202 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block toolbar %}
+<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+    <a href="#" id="reorderList" class="material-icons mdc-toolbar__icon" aria-label="Bookmark this page" alt="Bookmark this page">reorder</a>
+</section>
+<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+    <a href="#" id="deleteList" class="material-icons mdc-toolbar__icon" aria-label="Bookmark this page" alt="Bookmark this page">delete</a>
+</section>
+{% endblock %}
 {% block content %}
+
 <nav class="mdc-list mdc-list--dense mdc-list--two-line">
     {% for entry in entries %}
-    
-    <a href="{% url 'edit_entry' entry.id %}" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+
+    <a href="{% url 'edit_entry' list_id entry.id %}" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
 	<span class="mdc-list-item__text">
 	    {{ entry.title }}
 	    <span class="mdc-list-item__text__secondary">
 		{% if entry.quantity %}
 		{% trans "Quantity: " %}{{ entry.quantity }}
 		{% endif %}
+		{% if entry.category %}
 		{% trans "Category: " %}{{ entry.get_category_display }}
+		{% endif %}
 	    </span>
 	</span>
     </a>
     {% endfor %}
-</nav>
-<div class="fab wrapper">
-    <button class="mdc-fab material-icons mdc-fab--mini" aria-label="Add new Grocery List" data-mdc-auto-init="MDCRipple" onclick="window.location.href='{% url 'new_entry' list_id %}'">
-	<span class="mdc-fab__icon">
-	    add
-	</span>
-    </button>
+
+    <div class="fab wrapper">
+	<button class="mdc-fab material-icons mdc-fab--mini" aria-label="Add new Grocery List" data-mdc-auto-init="MDCRipple" onclick="window.location.href='{% url 'new_entry' list_id %}'">
+	    <span class="mdc-fab__icon">
+		add
+	    </span>
+	</button>
     </div>
-    {% endblock %}
+</nav>
+
+{% load static %}
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
+<script>
+ $( function() {
+     $( "#sortable" ).sortable();
+     $( "#sortable" ).disableSelection();
+ } );
+</script>
+<script>
+ function reorder_categories() {
+     var categoryOrder = [];
+     $("#sortable li").each(function() { categoryOrder.push(this.id) });
+     $.ajax({
+	 type : "POST",
+	 headers: {'X-CSRFToken': '{{ csrf_token }}'},
+
+	 data : { order : categoryOrder },
+	 success: function (data) {
+	     location.reload();
+	 }
+     });
+ }
+</script>
+<script>
+ $('.mdc-toolbar__title').click(function() {
+     title = $(this).text().trim();
+     label = '{% trans 'New list title' %}';
+     buttonLabel = '{% trans 'Submit' %}'
+     template =
+	 `
+    <form id="new-title-form" method="POST" action="change_list_title/">
+	<div class="mdc-form-field">
+	    <div class="mdc-textfield">
+		<label for="newTitle" class="mdc-textfield__label--float-above">${label}</label>
+		<input id="newTitle" type="text" class="mdc-textfield__input" value="${title}" required minlength=1>
+	    </div>
+	    <input class="mdc-button mdc-button--raised" type="submit" value="${buttonLabel}" data-mdc-auto-init="MDCRipple"></input>
+	</div>
+    </form>
+    `;
+
+     $(this).replaceWith(template);
+
+     $("#new-title-form").on("submit", function(event) {
+	 event.preventDefault();
+	 $.ajax({
+	     url: 'change_list_title/',
+	     type: "POST",
+	     headers: {'X-CSRFToken': '{{ csrf_token }}'},
+	     data : {
+		 title  : $("#newTitle").val(),
+	     },
+	     success: function (data) {
+		 console.log("yeah");
+		 console.log(data);
+		 location.reload();
+	     }
+	 });
+     });
+ });
+
+</script>
+<aside id="reorder-list-dialog"
+       class="mdc-dialog"
+       role="alertdialog"
+       aria-labelledby="delete-list-dialog-label"
+       aria-describedby="delete-list-dialog-description">
+    <div class="mdc-dialog__surface">
+	<header class="mdc-dialog__header">
+	    <h2 id="delete-list-dialog-label" class="mdc-dialog__header__title">
+		{% trans 'Reorder List' %} {{toolbarTitle}}?
+	    </h2>
+	</header>
+	<section id="my-mdc-dialog-description" class="mdc-dialog__body">
+	    <form action="show_list" method="POST" id="category-form">
+		{% csrf_token %}
+		<ul class="mdc-list mdc-list--dense" id="sortable">
+		    {% for key, value in entries_categories.items %}
+		    {% if value.category %}
+		    <li class="mdc-list-item" id="{{key}}" class="ui-state-default" data-mdc-auto-init="MDCRipple"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>{{value.get_category_display}}</li>
+		    {% endif %}
+		    {% endfor %}
+		</ul>
+	    </form>
+	</section>
+	<footer class="mdc-dialog__footer">
+	    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">{% trans 'Cancel' %}</button>
+	    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">{% trans 'Reorder' %}</button>
+	</footer>
+    </div>
+    <div class="mdc-dialog__backdrop"></div>
+</aside>
+<aside id="delete-list-dialog"
+       class="mdc-dialog"
+       role="alertdialog"
+       aria-labelledby="delete-list-dialog-label"
+       aria-describedby="delete-list-dialog-description">
+    <div class="mdc-dialog__surface">
+	<header class="mdc-dialog__header">
+	    <h2 id="delete-list-dialog-label" class="mdc-dialog__header__title">
+		{% trans 'Delete List' %} {{toolbarTitle}}?
+	    </h2>
+	</header>
+	<section id="my-mdc-dialog-description" class="mdc-dialog__body">
+	    {% trans 'Do you really want to delete the list?' %}
+	</section>
+	<footer class="mdc-dialog__footer">
+	    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">{% trans 'Cancel' %}</button>
+	    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">{% trans 'Delete' %}</button>
+	</footer>
+    </div>
+    <div class="mdc-dialog__backdrop"></div>
+</aside>
+{% endblock %}
+{% block mdc_scripts %}
+{{ block.super }}
+<script>
+ mdc.textfield.MDCTextfield.attachTo(document.querySelector('.mdc-textfield'));
+</script>
+
+<script>
+ var MDCDialog = mdc.dialog.MDCDialog;
+
+ var dialog = new MDCDialog(document.querySelector('#delete-list-dialog'));
+ dialog.listen('MDCDialog:accept', function() {
+     console.log('accepted');
+     $.ajax({
+	 url: 'delete_list/',
+	 type: "POST",
+	 headers: {'X-CSRFToken': '{{ csrf_token }}'},
+	 success: function (data) {
+	     window.location.href = "/";
+	 }
+     });
+
+ })
+ dialog.listen('MDCDialog:cancel', function() {
+ })
+ document.querySelector('#deleteList').addEventListener('click', function (evt) {
+     dialog.lastFocusedTarget = evt.target;
+     dialog.show();
+ })
+</script>
+<script>
+ var MDCDialog = mdc.dialog.MDCDialog;
+
+ var dialog2 = new MDCDialog(document.querySelector('#reorder-list-dialog'));
+ dialog2.listen('MDCDialog:accept', function() {
+     event.preventDefault();
+     reorder_categories();
+ })
+
+ dialog2.listen('MDCDialog:cancel', function() {
+ })
+
+ document.querySelector('#reorderList').addEventListener('click', function (evt) {
+     dialog2.lastFocusedTarget = evt.target;
+     dialog2.show();
+ })
+</script>
+{% endblock %}

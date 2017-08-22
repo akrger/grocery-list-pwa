@@ -23,5 +23,16 @@ body {
     width: 100%;
 }
 .fab.wrapper {
-    align-self: flex-end;
+    position:  fixed;
+    bottom: 1rem;
+    right: 1rem;
+}
+@media(min-width: 1024px) {
+    .fab.wrapper {
+	bottom: 1.5rem;
+	right: 1.5rem;
+    }
+}
+.mdc-layout-grid__cell--span-2 {
+    align-self: baseline;
 }

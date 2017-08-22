@@ -9,6 +9,7 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="{% static 'css/material-components-web.min.css' %}">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     </head>
     <body class="mdc-typography">
 	<div class="container">
@@ -24,6 +25,8 @@
 			</span>
 		    </section>
 		    <div class="mdc-menu-anchor">
+			{% block toolbar %}
+			{% endblock %}
 			<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
 			    <a href="#" class="menu-button material-icons mdc-toolbar__icon" aria-label="Bookmark this page" alt="Bookmark this page">more_vert</a>
 			</section>
@@ -32,6 +35,8 @@
 				<li id="logout" class="mdc-list-item" role="menuitem" tabindex="0">
 				    Logout
 				</li>
+				{% block menu %}
+				{% endblock %}
 			    </ul>
 			</div>
 		    </div>
@@ -49,9 +54,9 @@
 			    <a class="mdc-list-item mdc-temporary-drawer--selected" href="/">
 				<i class="material-icons mdc-list-item__start-detail" aria-hidden="true">list</i>{% trans "Grocery Lists" %}
 			    </a> 
-			    <a class="mdc-list-item mdc-temporary-drawer--selected" href="{% url 'show_all_entries' %}">
-				<i class="material-icons mdc-list-item__start-detail" aria-hidden="true">list</i>{% trans "All Entries" %}
-			    </a>
+			    <!-- <a class="mdc-list-item mdc-temporary-drawer--selected" href="{% url 'show_all_entries' %}">
+				 <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">list</i>{% trans "All Entries" %}
+				 </a> -->
 			</div>
 		    </nav>
 		</nav>

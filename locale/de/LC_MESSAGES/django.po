@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-18 14:03+0200\n"
+"POT-Creation-Date: 2017-08-22 19:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,69 +18,116 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main/models.py:7 main/models.py:21 main/templates/main/edit_entry.html:17
-#: main/templates/main/new_entry.html:8
+#: main/models.py:7 main/models.py:24 main/templates/main/edit_entry.html:22
+#: main/templates/main/new_entry.html:11
 msgid "Title"
 msgstr "Titel"
 
-#: main/models.py:17
+#: main/models.py:19
 msgid "Drinks"
 msgstr "Getränke"
 
-#: main/models.py:18
+#: main/models.py:20
 msgid "Foods"
 msgstr "Lebensmittel"
 
-#: main/models.py:25
+#: main/models.py:21
+msgid "Housewares"
+msgstr "Haushaltswaren"
+
+#: main/models.py:30
 msgid "Quantity"
 msgstr "Anzahl"
 
-#: main/templates/main/edit_entry.html:35 main/templates/main/new_entry.html:26
-#: main/templates/main/new_list.html:13
+#: main/templates/main/edit_entry.html:38 main/templates/main/new_entry.html:30
+#: main/templates/main/new_list.html:17 main/templates/main/show_list.html:69
 msgid "Submit"
 msgstr "Abschicken"
 
+#: main/templates/main/edit_entry.html:52
+msgid "Delete Entry"
+msgstr "Eintrag löschen"
+
+#: main/templates/main/edit_entry.html:56
+msgid "Do you really want to delete the entry?"
+msgstr "Möchten Sie wirklich diesen Eintrag löschen?"
+
+#: main/templates/main/edit_entry.html:59
+#: main/templates/main/show_list.html:128
+#: main/templates/main/show_list.html:149
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: main/templates/main/edit_entry.html:60
+#: main/templates/main/show_list.html:150
+msgid "Delete"
+msgstr "Löschen"
+
 #: main/templates/main/show_all_entries.html:12
-#: main/templates/main/show_list.html:14
+#: main/templates/main/show_list.html:24
 msgid "Category: "
 msgstr "Kategorie: "
 
-#: main/templates/main/show_list.html:12
+#: main/templates/main/show_list.html:21
 msgid "Quantity: "
 msgstr "Anzahl: "
 
-#: main/views.py:12
+#: main/templates/main/show_list.html:68
+msgid "New list title"
+msgstr "Neuer Listentitel"
+
+#: main/templates/main/show_list.html:112
+msgid "Reorder List"
+msgstr "Liste sortieren"
+
+#: main/templates/main/show_list.html:129
+msgid "Reorder"
+msgstr "Sortieren"
+
+#: main/templates/main/show_list.html:142
+msgid "Delete List"
+msgstr "Liste löschen"
+
+#: main/templates/main/show_list.html:146
+msgid "Do you really want to delete the list?"
+msgstr "Möchten Sie wirklich diese Liste löschen?"
+
+#: main/views.py:14
 msgid "All Grocery Lists"
 msgstr "Alle Einfkaufslisten"
 
-#: main/views.py:37 templates/base.html:53
+#: main/views.py:67
+msgid "An entry with this title was already created in this list."
+msgstr "Es existiert bereits ein Eintrag mit diesem Titel in dieser Liste."
+
+#: main/views.py:126 templates/base.html:58
 msgid "All Entries"
 msgstr "Alle Einträge"
 
-#: main/views.py:49
+#: main/views.py:138
 msgid "Edit Entry"
 msgstr "Eintrag bearbeiten"
 
-#: main/views.py:75
+#: main/views.py:167
 msgid "New Grocery List"
 msgstr "Neue Einkaufsliste"
 
-#: main/views.py:98
+#: main/views.py:190
 msgid "New Entry"
 msgstr "Neuer Eintrag"
 
-#: templates/base.html:44
+#: templates/base.html:49
 msgid "Grocery List App"
 msgstr "Einkaufslisten-App"
 
-#: templates/base.html:50
+#: templates/base.html:55
 msgid "Grocery Lists"
 msgstr "Einfkaufslisten"
 
-#: templates/base.html:111
+#: templates/base.html:116
 msgid "This website now works offline"
 msgstr "Diese Webseite funktioniert nun offline"
 
-#: templates/base.html:112
+#: templates/base.html:117
 msgid "Dismiss"
 msgstr "Verstanden"

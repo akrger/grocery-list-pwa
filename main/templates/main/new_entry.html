@@ -3,29 +3,37 @@
 {% block content %}
 <form action="new_entry" method="post">
     {% csrf_token %}
-    <div class="mdc-form-field">
-	<div id="title" class="mdc-textfield mdc-textfield--upgraded">
-	    <label for="id_title" class="mdc-textfield__label">{% trans "Title" %}</label>
-	    {{ form.title }}
+    <div class="mdc-layout-grid">
+	<div class="mdc-layout-grid__inner">
+	    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+		<div class="mdc-form-field">
+		    <div id="title" class="mdc-textfield mdc-textfield--upgraded">
+			<label for="id_title" class="mdc-textfield__label">{% trans "Title" %}</label>
+			{{ form.title }}
+		    </div>
+		</div>
+	    </div>
+	    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+		<div class="mdc-form-field">
+		    <div id="quantity" class="mdc-textfield mdc-textfield--upgraded">
+			<label for="id_quantity" class="mdc-textfield__label">{{ form.quantity.label }}</label>
+			{{ form.quantity }}
+		    </div>
+		</div>
+	    </div>
+	    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"> 
+		<div class="mdc-form-field">
+		    {{ form.category }}
+		</div>
+	    </div>
+	    <div class="mdc-layout-grid__cell">
+		<button type="submit" class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">{% trans "Submit" %}</button>
+	    </div>
 	</div>
     </div>
-    <br>
-    <div class="mdc-form-field">
-	<div id="quantity" class="mdc-textfield mdc-textfield--upgraded">
-	    <label for="id_quantity" class="mdc-textfield__label">{{ form.quantity.label }}</label>
-	    {{ form.quantity }}
-	</div>
-    </div>
-    <br>
-    <br>
-    <br>
-    {{ form.category }}
-    <br>
-    <br>
-    <br>
-    <button type="submit" class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">{% trans "Submit" %}</button>
     </div>
 </form>
+
 {% endblock %}
 {% block mdc_scripts %}
 {{ block.super }}
@@ -35,9 +43,24 @@
 
  const MDCSelect = mdc.select.MDCSelect;
  const select = new MDCSelect(document.querySelector('.mdc-select'));
- select.listen('MDCSelect:change', () => {
-     alert(`Selected "${select.selectedOptions[0].textContent}" at index ${select.selectedIndex} ` +
-	   `with value "${select.value}"`);
+</script>
+<script>
+ $("#id_title").change(function () {
+     var title = $(this).val();
+
+     $.ajax({
+	 url: 'validate_entry/',
+	 data: {
+	     'title': title
+	 },
+	 dataType: 'json',
+	 success: function (data) {
+	     if (data.is_taken) {
+		 alert(data.error_message);
+	     }
+	 }
+     });
+
  });
 </script>
 {% endblock %}

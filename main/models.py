@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 class List(models.Model):
     user = models.IntegerField()
     title = models.CharField(max_length=30, verbose_name=_('Title'))
+    order = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -13,9 +14,11 @@ class List(models.Model):
 class Entry(models.Model):
     DRINKS = 'DR'
     FOODS = 'FO'
+    HOUSEWARES = 'HO'
     CATEGORIES = (
         (DRINKS, _('Drinks')),
         (FOODS, _('Foods')),
+        (HOUSEWARES, _('Housewares'))
     )
 
     title = models.CharField(max_length=50, verbose_name=_('Title'))

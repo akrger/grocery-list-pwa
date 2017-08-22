@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block toolbar %}
+
+<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+    <a href="#" id="deleteEntry" class="material-icons mdc-toolbar__icon" aria-label="Bookmark this page" alt="Bookmark this page">delete</a>
+</section>
+{% endblock %}
 {% block content %}
 
 
@@ -7,34 +13,55 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    <div class="mdc-form-field">
-	{{form.grocery_list}}
-    </div>
-    <br>
-    <br>
-    <div class="mdc-form-field">
-	<div id="title" class="mdc-textfield mdc-textfield--upgraded">
-	    <label for="id_title" class="mdc-textfield__label">{% trans "Title" %}</label>
-	    {{ form.title }}
+    <div class="mdc-layout-grid">
+	<div class="mdc-layout-grid__inner">
+		{{form.grocery_list.hidden}}
+	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+	    <div class="mdc-form-field">
+		<div id="title" class="mdc-textfield mdc-textfield--upgraded">
+		    <label for="id_title" class="mdc-textfield__label">{% trans "Title" %}</label>
+		    {{ form.title }}
+		</div>
+	    </div>
+	</div>
+	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+	    <div class="mdc-form-field">
+		<div id="quantity" class="mdc-textfield mdc-textfield--upgraded">
+		    <label for="id_quantity" class="mdc-textfield__label">{{ form.quantity.label }}</label>
+		    {{ form.quantity }}
+		</div>
+	    </div>
+	</div>
+	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"> 
+	    {{ form.category }}
+	</div>
+	<button type="submit" class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">{% trans "Submit" %}</button>
 	</div>
     </div>
-    <br>
-    <div class="mdc-form-field">
-	<div id="quantity" class="mdc-textfield mdc-textfield--upgraded">
-	    <label for="id_quantity" class="mdc-textfield__label">{{ form.quantity.label }}</label>
-	    {{ form.quantity }}
-	</div>
-    </div>
-    <br>
-    <br>
-    <br>
-    {{ form.category }}
-    <br>
-    <br>
-    <br>
-    <button type="submit" class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">{% trans "Submit" %}</button>
     </div>
 </form>
+
+<aside id="delete-entry-dialog"
+       class="mdc-dialog"
+       role="alertdialog"
+       aria-labelledby="delete-entry-dialog-label"
+       aria-describedby="delete-entry-dialog-description">
+    <div class="mdc-dialog__surface">
+	<header class="mdc-dialog__header">
+	    <h2 id="delete-entry-dialog-label" class="mdc-dialog__header__title">
+		{% trans 'Delete Entry' %} {{entry}}?
+	    </h2>
+	</header>
+	<section id="my-mdc-dialog-description" class="mdc-dialog__body">
+	    {% trans 'Do you really want to delete the entry?' %}
+	</section>
+	<footer class="mdc-dialog__footer">
+	    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">{% trans 'Cancel' %}</button>
+	    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">{% trans 'Delete' %}</button>
+	</footer>
+    </div>
+    <div class="mdc-dialog__backdrop"></div>
+</aside>
 {% endblock %}
 {% block mdc_scripts %}
 {{ block.super }}
@@ -42,11 +69,29 @@
  mdc.textfield.MDCTextfield.attachTo(document.querySelector('#title'));
  mdc.textfield.MDCTextfield.attachTo(document.querySelector('#quantity'));
 
- const MDCSelect = mdc.select.MDCSelect;
- const select = new MDCSelect(document.querySelector('.mdc-select'));
- select.listen('MDCSelect:change', () => {
-     alert(`Selected "${select.selectedOptions[0].textContent}" at index ${select.selectedIndex} ` +
-	   `with value "${select.value}"`);
- });
+</script>
+
+<script>
+ var MDCDialog = mdc.dialog.MDCDialog;
+
+ var dialog = new MDCDialog(document.querySelector('#delete-entry-dialog'));
+ dialog.listen('MDCDialog:accept', function() {
+     console.log('accepted');
+     $.ajax({
+	 url: '{% url "delete_entry" list_id entry_id %}',
+	 type: "POST",
+	 headers: {'X-CSRFToken': '{{ csrf_token }}'},
+	 success: function (data) {
+	     window.location.href = "{% url 'show_list' list_id %}";
+	 }
+     });
+
+ })
+ dialog.listen('MDCDialog:cancel', function() {
+ })
+ document.querySelector('#deleteEntry').addEventListener('click', function (evt) {
+     dialog.lastFocusedTarget = evt.target;
+     dialog.show();
+ })
 </script>
 {% endblock %}
